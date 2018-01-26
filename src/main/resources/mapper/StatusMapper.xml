@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huato.lottery.dao.StatusDao" >
+
+<insert id="insertStatus" parameterType="com.huato.lottery.pojo.Status">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+        SELECT LAST_INSERT_ID();
+    </selectKey>
+    INSERT INTO Status
+
+    <trim  prefix="("  suffix=")" suffixOverrides=",">
+        <if test="status!=null">
+          status,
+        </if>
+        <if test="aid!=null">
+          aid
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="status!=null">
+            #{status,jdbcType=INTEGER},
+        </if>
+        <if test="aid!=null">
+            #{aid,jdbcType=INTEGER},
+        </if>
+    </trim>
+</insert>
+
+<delete id="deleteStatus" parameterType="com.huato.lottery.pojo.Status">
+    DELETE FROM Status WHERE id = #{id}
+</delete>
+
+    <delete id="deleteAllStatus" >
+        DELETE FROM Status
+    </delete>
+
+    <select id="queryStatus"   resultType="com.huato.lottery.pojo.Status">
+        SELECT * FROM Status
+        WHERE aid = #{aid}
+    </select>
+
+</mapper>

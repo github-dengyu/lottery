@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huato.lottery.dao.WinnersDao" >
+
+    <insert id="insertWinner" parameterType="com.huato.lottery.pojo.Winners">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+        INSERT  INTO Winners
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="lid!=null">
+                lid,
+            </if>
+            <if test="aid!=null">
+                aid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="lid!=null">
+                #{lid,jdbcType=INTEGER},
+            </if>
+            <if test="aid!=null">
+                #{aid,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteWinners" >
+        delete FROM  Winners
+    </delete>
+
+    <delete id="deleteWinner" parameterType="com.huato.lottery.pojo.Winners">
+        delete FROM  Winners WHERE  id = #{id}
+
+    </delete>
+
+    <select id="queryAllWinners" resultType="com.huato.lottery.pojo.Winners">
+        SELECT id,lid,aid FROM Winners WHERE aid = #{aid}
+        limit #{limit}
+    </select>
+
+
+</mapper>

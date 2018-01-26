@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huato.lottery.dao.LotteryDao" >
+
+    <insert id="insertLottery" parameterType="com.huato.lottery.pojo.Lottery">
+<!--        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID();
+        </selectKey>-->
+        INSERT INTO Lottery
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+               id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="times != null">
+                times,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="times != null">
+                #{times,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteLottery" parameterType="com.huato.lottery.pojo.Lottery">
+        DELETE FROM Lottery WHERE id= #{id}
+    </delete>
+
+    <delete id="deleteLotterys" >
+        DELETE FROM Lottery
+    </delete>
+
+    <select id="queryLottery" resultType="com.huato.lottery.pojo.Lottery">
+         SELECT * FROM Lottery
+         WHERE times = #{times}
+    </select>
+
+    <update id="updateLottery" parameterType="com.huato.lottery.pojo.Lottery">
+        UPDATE  lottery SET
+            times= #{times}
+            WHERE  id = #{id}
+    </update>
+
+</mapper>
