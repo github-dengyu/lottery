@@ -55,8 +55,8 @@ public class LotteryController {
         //非公平锁
         Lock lock = new ReentrantLock();
         if(lotteryVO!=null){
+            lock.lock();
             try{
-                lock.lock();
                 int number = lotteryVO.getPeople();
                 for (int i = 0; i <number ; i++) {
                     Lottery lottery = new Lottery();
@@ -97,8 +97,8 @@ public class LotteryController {
             System.out.print(list.get(i)+" ");
         }
         Lock lock = new ReentrantLock();
+        lock.lock();
         try{
-            lock.lock();
             winnersService.deleteWinners();
             lotteryService.deleteLotterys();
             awardService.deleteAwards();
